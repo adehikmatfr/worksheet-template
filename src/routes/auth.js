@@ -16,11 +16,19 @@ const { register, login, getToken } = require("../controllers");
 
 //============middleware======
 // const { roleAuth } = require("../middlewares");
-
+const { sendEmail } = require("../helpers");
 // ===========http method=====
 Route.post("/register", validRegist, register)
   .post("/login", validLogin, login)
-  .post("/token", validRefresh, getToken);
+  .post("/token", validRefresh, getToken)
+  .get("/test", async (req, res) => {
+    await sendEmail({
+      email: "aalolxyz@gmail.com",
+      from: "adehikmatfr",
+      subject: "test",
+    });
+    res.send("ok");
+  });
 
 // ===========module export===
 module.exports = Route;
