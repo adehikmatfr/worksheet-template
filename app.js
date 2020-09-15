@@ -32,3 +32,4 @@ app.listen(process.env.PORT || 3000, () => {
   console.log("base endpoint : " + process.env.BASE_ENDPOIN || "/api/v1/");
   console.log("with mode : " + process.env.NODE_ENV);
 });
+require("./src/config/redis");

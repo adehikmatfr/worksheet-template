@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt"),
 const { Users } = require("../models");
 
 // =========helpers==============
-const response = require("../helpers/response");
+const { response, setCache, delCache } = require("../helpers");
 
 // =========Keys=================
 const API_KEY = process.env.API_KEY,
@@ -67,11 +67,24 @@ const getToken = async (req, res) => {
   }
 };
 
+// ========getall user===========
+const getUsers = async (req, res) => {
+  try {
+    const key = "User";
+    const users = await Users.findAll();
+    await delCache(key);
+    await setCache(key, users);
+    return response(res, 200, false, users);
+  } catch (err) {
+    return response(res, 500, true, err);
+  }
+};
 // ========generate obj============
 const auth = {
   register,
   login,
   getToken,
+  getUsers,
 };
 
 // ========module export============
